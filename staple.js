@@ -1,10 +1,15 @@
 var response = await fetch("./libstruct.json");
-const libStructJson = await response.json();
+const libStruct = await response.json();
 
-response = await fetch("./formattednames.json");
-const formattedNames = response.json();
+var formattedNames;
+try {
+	response = await fetch("./formattednames.json");
+	formattedNames = response.json();
+} catch (err) {
+	formattedNames = {};
+}
 
-async function importModules(libStruct, basePath = "./src") {
+async function importModules(libStruct, basePath = ".") {
   const importedData = {};
 
   async function importModule(key, path) {
@@ -34,7 +39,7 @@ async function importModules(libStruct, basePath = "./src") {
   return importedData;
 }
 
-const Staple = await importModules(libStructJson);
+const Staple = await importModules(libStruct, "./src");
 
 export {
 	Staple

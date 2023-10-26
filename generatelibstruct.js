@@ -24,8 +24,7 @@ function addPropertiesToObject(rootDir, targetObject) {
     }
 }
 
-const baseDir = path.join(path.dirname(process.argv[1]), 'src');
-const libDir = baseDir;
+const libDir = path.join(path.dirname(process.argv[1]), 'src');
 
 const StapleCrypto = {};
 addPropertiesToObject(libDir, StapleCrypto);

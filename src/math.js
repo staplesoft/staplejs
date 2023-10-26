@@ -1,7 +1,7 @@
-if (typeof S_LIB === "undefined") const S_LIB = {};
+if (typeof S_LIB === "undefined") var S_LIB = {};
 
 S_LIB.Math = {
-    ...Math,
+    ...(function () { const newObj = {}; Object.getOwnPropertyNames(globalThis.Math).forEach(key => newObj[key] = globalThis.Math[key]); return newObj; })(),
     clon32(integer) {
         return this.clz32(~integer);
     },
@@ -20,8 +20,8 @@ S_LIB.Math = {
     iadd(a, b) {
         return (a + b) | 0;
     },
-    secureRandom() {
-        return crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32; // cryptographically secure Math.random()
+    getCryptoSecureRandomInt() {
+        return crypto.getRandomValues(new Uint32Array(1))[0]; // cryptographically secure pseudorandom number generator
     },
     getRandomArbitrary(min, max) {
         return this.random() * (max - min) + min;
