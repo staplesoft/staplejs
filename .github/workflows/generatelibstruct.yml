@@ -1,0 +1,38 @@
+name: Generate Library Structure
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: latest
+    - name: Generate Library Structure File
+      run: node generatelibstruct.js
+    - name: Commit Generated File
+      run: |
+        git config --global user.name 'lrww'
+        git config --global user.email '144589169+lrww@users.noreply.github.com'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        git checkout "${GITHUB_REF:11}"
+        git add -A
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "Update library structure file"
+          git push
+          echo "Updated"
+        else
+          echo "No changes"
+        fi
