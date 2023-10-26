@@ -34,8 +34,8 @@ async function importModules(libStruct, basePath = "./src") {
   return importedData;
 }
 
-const StapleCrypto = await importModules(libStructJson);
+const Staple = await importModules(libStructJson);
 
 export {
-	StapleCrypto
-}
+	Staple
+};
