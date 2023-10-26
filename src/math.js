@@ -1,4 +1,4 @@
-const S_LIB = Staple ?? {};
+if (typeof S_LIB === "undefined") const S_LIB = {};
 
 S_LIB.Math = {
     ...Math,
@@ -36,6 +36,6 @@ S_LIB.Math = {
         max = Math.floor(max);
         return Math.floor(this.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
     }
-}
+};
 
 export var Math = S_LIB.Math;
