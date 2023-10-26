@@ -4,7 +4,7 @@ const libStruct = await response.json();
 var formattedNames;
 try {
 	response = await fetch("./formattednames.json");
-	formattedNames = response.json();
+	formattedNames = await response.json();
 } catch (err) {
 	formattedNames = {};
 }
