@@ -1,9 +1,14 @@
-var response = await fetch("./libstruct.json");
-const libStruct = await response.json();
+var response, libStruct;
+try {
+	response = await fetch(import.meta.resolve("./libstruct.json"));
+	libStruct = await response.json();
+} catch (err) {
+	console.error(`Error while fetching and parsing './libstruct.json': ${err.message}`)
+}
 
 var formattedNames;
 try {
-	response = await fetch("./formattednames.json");
+	response = await fetch(import.meta.resolve("./formattednames.json"));
 	formattedNames = await response.json();
 } catch (err) {
 	formattedNames = {};
@@ -14,12 +19,12 @@ async function importModules(libStruct, basePath = ".") {
 
   async function importModule(key, path) {
     try {
-		var moduleNamespace = await import(path);
+		var moduleNamespace = await import(import.meta.resolve(path));
 		for (const prop in moduleNamespace) {
 			importedData[prop] = moduleNamespace[prop];
 		}
-    } catch (error) {
-      console.error(`Failed to import module for ${key}: ${error.message}`);
+    } catch (err) {
+      console.error(`Failed to import module for ${key}: ${err.message}`);
     }
   }
 
