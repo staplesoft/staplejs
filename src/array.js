@@ -1,6 +1,6 @@
 if (typeof S_LIB === "undefined") var S_LIB = {};
 
-S_LIB.Array = class extends Array {
+S_LIB.Array = class extends globalThis.Array {
 	static dimensionsOf(...lengths) {
 		var arr = new Array(lengths[0] ?? 0), i = lengths[0];
 
